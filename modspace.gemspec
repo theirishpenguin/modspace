@@ -6,8 +6,8 @@ Gem::Specification.new do |spec|
   spec.authors       = ["declan@weuseopensource.com"]
   spec.email         = ["declan@weuseopensource.com"]
 
-  spec.summary       = %q{Modspace is a small library to allow the definition and management of namespaces and nested modules in Ruby .}
-  spec.description   = %q{Modspace is a small library to allow the definition and management of namespaces and nested modules in Ruby .}
+  spec.summary       = %q{Modspace is a small library to allow the easy definition and management of namespaces and nested modules in Ruby.}
+  spec.description   = %q{Modspace is a small library to allow the easy definition and management of namespaces and nested modules in Ruby.}
   #spec.homepage      = "TODO: Put your gem's website or public repo URL here."
   spec.license       = "MIT"
   spec.required_ruby_version = Gem::Requirement.new(">= 2.3.0")

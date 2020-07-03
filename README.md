@@ -1,8 +1,7 @@
 # Modspace
 
-Welcome to your new gem! In this directory, you'll find the files you need to be able to package up your Ruby library into a gem. Put your Ruby code in the file `lib/modspace`. To experiment with that code, run `bin/console` for an interactive prompt.
 
-TODO: Delete this and the text above, and describe your gem
+Modspace is a small library to allow the easy definition and management of namespaces and nested modules in Ruby.
 
 ## Installation
 
@@ -20,19 +19,79 @@ Or install it yourself as:
 
     $ gem install modspace
 
+## The Problem
+
+In Ruby, if you want to define nested modules you typically have to do some
+extreme indentation in your source code files. For example, to define
+a function - `some_funct()` - in a module, such as `Foo::Bar::Zoo::Shoe`,
+would require this...
+
+    module Foo
+        module Bar
+            module Zoo
+                module Shoe
+                    def some_funct
+                        puts "Eek"
+                    end
+                end
+            end
+        end
+    end
+
+This "nested plane of death" can be a massive pain. Not only does it
+look awkward but, given many teams have coding standards with set line
+length limits, it quickly eats up your available character count. Why
+should a developer be penalised for nesting modules (unneccessary
+nesting is not recommended of course!)? One solution is to define the
+parent namespace in advance of the implementation - and this is much
+better...
+
+    # Define parent namespace
+    module Foo
+        module Bar
+            module Zoo
+            end
+        end
+    end
+
+    # Implementation
+    module Foo::Bar::Zoo::Shoe
+        def some_funct
+            puts "Eek"
+        end
+    end
+
+_Note: We use the term "namespace" to mean a nested module or nested class._
+
+__The Modspace gem goes the extra mile and let's you clean up the
+definition of the parent namespace (or any namespace for that matter) as
+we will see in the next section.__
+
 ## Usage
 
-TODO: Write usage instructions here
+Define a new namespace (ie. nested module), such as `Foo::Bar::Zoo` in one line...
 
-## Development
+    require 'modspace'
 
-After checking out the repo, run `bin/setup` to install dependencies. Then, run `rake spec` to run the tests. You can also run `bin/console` for an interactive prompt that will allow you to experiment.
+    # Define parent namespace
+    Modspace.def_mod('Foo', 'Bar', 'Zoo')
+    # Note: This creates the namespace Foo::Bar::Zoo
 
-To install this gem onto your local machine, run `bundle exec rake install`. To release a new version, update the version number in `version.rb`, and then run `bundle exec rake release`, which will create a git tag for the version, push git commits and tags, and push the `.gem` file to [rubygems.org](https://rubygems.org).
+    # Implementation
+    module Foo::Bar::Zoo::Shoe
+        def some_funct
+            puts "Eek"
+        end
+    end
+
+__Note: You only need to define the parent namespace. For example, we
+omit "Shoe" from the initial namespace definition above.__
+
+For more examples, see the `examples/` directory.
 
 ## Contributing
 
-Bug reports and pull requests are welcome on GitHub at https://github.com/[USERNAME]/modspace.
+Bug reports and pull requests are welcome on GitHub at https://github.com/theirishpenguin/modspace.
 
 
 ## License
