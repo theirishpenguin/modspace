@@ -33,14 +33,12 @@ module Modspace
             # The desired nested module name may have already been defined elsewhere in the overall Ruby codebase.
             # If this is the case, we just reuse that constant definition.
             #
-            # Note: if we don't do this then we will get the warning: "already initialized constant Foo"
+            # Note 1: if we don't do this then we will get the warning: "already initialized constant Foo"
             #
-            # Note 2: parent_namespace.const_defined?(desired_nested_module_name) does not work as a check
-            # below (we tried!). Ditto for const_get().
-            #
-            desired_nested_module_as_string = "#{parent_namespace}::#{desired_nested_module_name}"
-            desired_nested_module = if const_defined?(desired_nested_module_as_string)
-                const_get(desired_nested_module_as_string)
+            # Note 2: The false passed to const_defined?() and const_get() methods prevent Ruby from looking up the
+            # inheritance tree when searching for the desired nested module name.
+            desired_nested_module = if parent_namespace.const_defined?(desired_nested_module_name, false)
+                parent_namespace.const_get(desired_nested_module_name, false)
             else
                 parent_namespace.const_set(desired_nested_module_name, Module.new)
             end

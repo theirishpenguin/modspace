@@ -41,8 +41,8 @@ would require this...
 This "nested plane of death" can be a massive pain. Not only does it
 look awkward but, given many teams have coding standards with set line
 length limits, it quickly eats up your available character count. Why
-should a developer be penalised for nesting modules (unneccessary
-nesting is not recommended of course!)? One solution is to define the
+should a developer be penalised for nesting modules? (Unneccessary
+nesting is not recommended of course!) One solution is to define the
 parent namespace in advance of the implementation - and this is much
 better...
 
