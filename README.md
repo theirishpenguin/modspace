@@ -77,7 +77,7 @@ Define a new namespace (ie. nested module), such as `Foo::Bar::Zoo` in one line.
     Modspace.def_mod('Foo', 'Bar', 'Zoo')
     # Note: This creates the namespace Foo::Bar::Zoo
 
-    # Implementation
+    # Implement the module you want with the methods you want...
     module Foo::Bar::Zoo::Shoe
         def some_funct
             puts "Eek"
@@ -86,6 +86,44 @@ Define a new namespace (ie. nested module), such as `Foo::Bar::Zoo` in one line.
 
 __Note: You only need to define the parent namespace. For example, we
 omit "Shoe" from the initial namespace definition above.__
+
+You can also use a shortcut syntax that looks more like the nested
+module syntax in Ruby...
+
+    require 'modspace'
+
+    # Define parent namespace
+    Modspace.def_mod('Foo::Bar::Zoo')
+    # Note: This creates the namespace Foo::Bar::Zoo
+
+    # Same as before, implement the module you want with the methods you want...
+    module Foo::Bar::Zoo::Shoe
+        def some_funct
+            puts "Eek"
+        end
+    end
+
+All this is quite handle if you are doing functional programming or
+modular programming in Ruby...
+
+    require 'modspace'
+
+    # Define parent namespace
+    Modspace.def_mod('Foo::Bar::Zoo')
+    # Note: This creates the namespace Foo::Bar::Zoo
+
+    # Same as before, implement the module you want with the methods you want...
+    module Foo::Bar::Zoo::Shoe
+        class << self
+            def some_funct
+                puts "Eek"
+            end
+        end
+    end
+
+    # Call you neatly scoped module!
+    Foo::Bar::Zoo::Shoe.some_funct
+    # => "Eek"
 
 For more examples, see the `examples/` directory.
 

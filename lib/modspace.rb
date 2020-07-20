@@ -10,6 +10,8 @@ module Modspace
         # for our purposes.
 
         def def_mod(*args, in_namespace: Object, in_class_of_instance: nil)
+            normalised_args = expand_any_double_colon_namespace_args(args)
+
             parent_namespace = if !in_class_of_instance.nil?
                 in_class_of_instance.class
             elsif !in_namespace.nil? # :in_namespace can be a module or class
@@ -18,7 +20,7 @@ module Modspace
                 raise ArgumentError, "If in_class or for_instance non-nil is specified they must be non-nil."
             end
 
-            defp_class_mod(parent_namespace, *args)
+            defp_class_mod(parent_namespace, *normalised_args)
         end
 
         private
@@ -44,6 +46,11 @@ module Modspace
             end
 
             defp_class_mod(desired_nested_module, *nesting_list)
+        end
+
+        # This method takes args like ["Foo::Bar::Zoo"] and turns them into ["Foo", "Bar", "Zoo"]
+        def expand_any_double_colon_namespace_args(args_arr)
+            args_arr.map{|arg| arg.split('::') }.flatten
         end
     end
 end

@@ -8,7 +8,6 @@ RSpec.describe Modspace do
     class SomeClass; end # Used in some specs below
     module SomeModule; end # Used in some specs below
 
-
     it "define the nested module Foo::Bar:Zoo within the current execution context" do
       zoo_module = Modspace.def_mod('Foo', 'Bar', 'Zoo', in_class_of_instance: self)
 
@@ -46,5 +45,20 @@ RSpec.describe Modspace do
       expect(Foo::Bar::Zoo).to be_a(Module)
       expect(Foo::Bar::Zoo).to eql(zoo_module)
     end
+
+    it "define the nested module Foo::Bar:Zoo using shortcut syntax" do
+      zoo_module = Modspace.def_mod('Foo::Bar::Zoo')
+
+      expect(Foo::Bar::Zoo).to be_a(Module)
+      expect(Foo::Bar::Zoo).to eql(zoo_module)
+    end
+
+    it "define the nested module Foo::Bar:Zoo using standard + shortcut syntax" do
+      zoo_module = Modspace.def_mod('Foo::Bar', 'Zoo')
+
+      expect(Foo::Bar::Zoo).to be_a(Module)
+      expect(Foo::Bar::Zoo).to eql(zoo_module)
+    end
+
   end
 end

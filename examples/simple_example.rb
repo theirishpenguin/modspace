@@ -17,7 +17,7 @@ end
 
 # ^ Note: Defaults to defining the namespace within "Object", as that is the top-level namespace within Ruby programs
 
-# 2) Create a new namespace (ie. nested module) and assign it to a variable...
+# 2) Create a new namespace and assign it to a variable...
 zoo2_module = Modspace.def_mod('Foo', 'Bar', 'Zoo2')
 
 if zoo2_module == Foo::Bar::Zoo2
@@ -26,7 +26,7 @@ else
     raise StandardError
 end
 
-# 3) Create a new namespace (ie. nested module) within a class...
+# 3) Create a new namespace within a class...
 class SomeClass; end
 
 zoo3_module = Modspace.def_mod('Foo', 'Bar', 'Zoo3', in_namespace: SomeClass)
@@ -37,7 +37,7 @@ else
     raise StandardError
 end
 
-# 4) Create a new namespace (ie. nested module) within a class...
+# 4) Create a new namespace within a class given an instance...
 
 an_instance_of_some_class = SomeClass.new
 
@@ -49,13 +49,24 @@ else
     raise StandardError
 end
 
-# 5) Create a new namespace (ie. nested module) within a module...
+# 5) Create a new namespace within a module...
 module SomeModule; end
 
 zoo5_module = Modspace.def_mod('Foo', 'Bar', 'Zoo5', in_namespace: SomeModule)
 
 if zoo5_module == SomeModule::Foo::Bar::Zoo5
     puts "5) We have defined a nested module Foo::Bar::Zoo5 within an explicit module"
+else
+    raise StandardError
+end
+
+# 6) Create a new namespace within a module using the shortcut syntax...
+module SomeModule; end
+
+zoo6_module = Modspace.def_mod('Foo::Bar::Zoo6', in_namespace: SomeModule)
+
+if zoo6_module == SomeModule::Foo::Bar::Zoo6
+    puts "6) We have defined a nested module Foo::Bar::Zoo5 within an explicit module using shortcut syntax"
 else
     raise StandardError
 end
